@@ -1,0 +1,49 @@
+{
+  "name": "jcc-ipfs",
+  "private": true,
+  "version": "0.0.0",
+  "description": "ipfs server",
+  "keywords": [],
+  "dependencies": {
+    "@sailshq/connect-redis": "^3.2.1",
+    "@sailshq/lodash": "^3.10.3",
+    "@sailshq/socket.io-redis": "^5.2.0",
+    "grunt": "^1.1.0",
+    "sails": "^1.2.4",
+    "sails-hook-grunt": "^4.0.0",
+    "sails-hook-orm": "^2.1.1",
+    "sails-hook-sockets": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "husky": "^4.2.3",
+    "prettier": "^2.0.2",
+    "pretty-quick": "^2.0.1"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node app.js",
+    "test": "npm run lint && npm run custom-tests && echo 'Done.'",
+    "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
+    "lint-fix": "./node_modules/eslint/bin/eslint.js . --fix",
+    "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && pretty-quick --staged"
+    }
+  },
+  "main": "app.js",
+  "author": "JCCDex",
+  "license": "MIT",
+  "engines": {
+    "node": "^12.13"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JCCDex/jcc_ipfs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JCCDex/jcc_ipfs/issues"
+  },
+  "homepage": "https://github.com/JCCDex/jcc_ipfs#readme"
+}
