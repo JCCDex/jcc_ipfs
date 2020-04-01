@@ -8,7 +8,12 @@ const verify = (message, signature, publicKey) => {
   return Keypair.verify(message, signature, publicKey);
 };
 
+const isValidAddress = (address) => {
+  return Keypair.isValidAddress(address);
+};
+
 module.exports = {
   toAddress,
-  verify
+  verify,
+  isValidAddress
 };
