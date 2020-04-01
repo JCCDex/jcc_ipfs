@@ -1,4 +1,3 @@
-const jingtum = require('@utils/jingtum');
 const getFolder = require('@utils/path').getFolder;
 const ipfs = require('@utils/ipfs');
 
@@ -14,13 +13,8 @@ module.exports = {
   },
   exits: {},
   async fn({ address }) {
-    if (!jingtum.isValidAddress(address)) {
-      return {
-        success: false,
-        msg: '钱包地址不合法'
-      };
-    }
     try {
+      sails.helpers.isValidAddress(address);
       const files = await ipfs.files.ls(getFolder(address));
       const results = [];
       for await (const file of files) {
