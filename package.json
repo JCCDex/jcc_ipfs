@@ -9,8 +9,10 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "@swtc/keypairs": "^1.0.10",
+    "blueimp-md5": "^2.13.0",
     "grunt": "^1.1.0",
     "ipfs-http-client": "^42.0.0",
+    "module-alias": "^2.2.2",
     "sails": "^1.2.4",
     "sails-hook-grunt": "^4.0.0",
     "sails-hook-orm": "^2.1.1",
@@ -24,6 +26,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node app.js",
+    "dev": "NODE_ENV=development node app.js",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "lint-fix": "./node_modules/eslint/bin/eslint.js . --fix",
@@ -47,5 +50,9 @@
   "bugs": {
     "url": "https://github.com/JCCDex/jcc_ipfs/issues"
   },
-  "homepage": "https://github.com/JCCDex/jcc_ipfs#readme"
+  "homepage": "https://github.com/JCCDex/jcc_ipfs#readme",
+  "_moduleAliases": {
+    "@root": ".",
+    "@utils": "./utils"
+  }
 }
