@@ -14,14 +14,15 @@ module.exports = {
   exits: {},
   async fn({ hash }) {
     try {
-      const files = await ipfs.get(hash);
+      const chunks = [];
+      for await (const chunk of ipfs.cat(hash)) {
+        chunks.push(chunk);
+      }
       const results = [];
-      for await (file of files) {
-        const content = [];
-        for await (const chunk of file.content) {
-          content.push(chunk);
-        }
-        const res = JSON.parse(content.toString());
+      const result = JSON.parse(chunks.toString());
+      const files = await ipfs.files.read(result.path);
+      for await (const file of files) {
+        const res = JSON.parse(file.toString());
         results.push({
           data: res.data,
           md5: res.md5,
