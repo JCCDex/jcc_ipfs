@@ -2,8 +2,6 @@
 
 接口文档：https://www.showdoc.cc/ipfs?page_id=4160536662548180
 
-
-欢迎使用ShowDoc！圧
     
 ## 流程概述
 1. client端发出写文件请求，包含了请求用户SWTC的公钥，以及用用户私钥加密过的要保存的数据。
