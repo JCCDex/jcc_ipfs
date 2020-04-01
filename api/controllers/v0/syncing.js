@@ -1,3 +1,5 @@
+const ipfs = require('@utils/ipfs');
+
 module.exports = {
   friendlyName: 'Syncing',
 
@@ -13,10 +15,25 @@ module.exports = {
 
   exits: {},
 
-  async fn(inputs) {
-    // All done.
-    console.log(inputs);
-
-    return;
+  async fn({ hash }) {
+    try {
+      const chunks = [];
+      for await (const chunk of ipfs.cat(hash)) {
+        chunks.push(chunk);
+      }
+      const res = JSON.parse(chunks.toString());
+      const stat = await ipfs.files.stat(res.path);
+      stat.cid = stat.cid.toString();
+      return {
+        success: true,
+        results: [stat]
+      };
+    } catch (error) {
+      sails.log(error);
+      return {
+        success: false,
+        msg: error.message
+      };
+    }
   }
 };
