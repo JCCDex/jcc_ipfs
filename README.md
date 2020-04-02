@@ -1,6 +1,6 @@
 # jcc_ipfs
 
-接口文档：https://www.showdoc.cc/ipfs?page_id=4160536662548180
+接口文档：https://www.showdoc.cc/ipfs?page_id=4160536662548180 (key:ipfs.io)
 
     
 ## 流程概述
