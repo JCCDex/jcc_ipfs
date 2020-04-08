@@ -47,4 +47,19 @@ module.exports.globals = {
    ****************************************************************************/
 
   sails: true,
+
+  responseStatus: {
+    lackoil: {
+      status: 'lackoil',
+      desp: '缺少燃料'
+    },
+    success: {
+      status: 'success',
+      desp: '成功'
+    },
+    error: {
+      status: 'error',
+      msg: '未知错误'
+    }
+  }
 };

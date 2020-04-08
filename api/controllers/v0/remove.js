@@ -19,13 +19,12 @@ module.exports = {
       const res = JSON.parse(chunks.toString());
       await ipfs.files.rm(res.path);
       return {
-        success: true
+        status: sails.config.globals.responseStatus.success.status
       };
     } catch (error) {
-      sails.log(error);
+      sails.log(`remove ${hash} error: `, error);
       return {
-        success: false,
-        msg: error.message
+        status: sails.config.globals.responseStatus.error.status
       };
     }
   }

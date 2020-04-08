@@ -42,14 +42,13 @@ module.exports = {
         }
       }
       return {
-        success: true,
+        status: sails.config.globals.responseStatus.success.status,
         results
       };
     } catch (error) {
-      sails.log(error);
+      sails.log(`fetch ${address} list error: `, error);
       return {
-        success: false,
-        msg: error.message
+        status: sails.config.globals.responseStatus.error.status
       };
     }
   }

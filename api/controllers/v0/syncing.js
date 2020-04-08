@@ -25,14 +25,13 @@ module.exports = {
       const stat = await ipfs.files.stat(res.path);
       stat.cid = stat.cid.toString();
       return {
-        success: true,
+        status: sails.config.globals.responseStatus.success.status,
         results: [stat]
       };
     } catch (error) {
-      sails.log(error);
+      sails.log(`syncing ${hash} error: `, error);
       return {
-        success: false,
-        msg: error.message
+        status: sails.config.globals.responseStatus.error.status
       };
     }
   }
