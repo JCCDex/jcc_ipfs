@@ -50,17 +50,26 @@ module.exports = {
   async fn({ data, md5, size, name, sign, timestamp, publickey, hash }) {
     try {
       sails.helpers.verify(data, md5, size, name, sign, timestamp, publickey);
+
+      const address = sails.helpers.toAddress(publickey);
+      const isValid = await sails.helpers.validateUser(address);
+      sails.log(`${address} deposit is valid: `, isValid);
+      if (!isValid) {
+        return {
+          status: sails.config.globals.responseStatus.lackoil.status
+        };
+      }
+
       const chunks = [];
       for await (const chunk of ipfs.cat(hash)) {
         chunks.push(chunk);
       }
       const res = JSON.parse(chunks.toString());
-      const path = getPath(sails.helpers.toAddress(publickey), name);
+      const path = getPath(address, name);
       // 若文件名发生变化，返回错误信息
       if (res.path !== path) {
         return {
-          success: false,
-          msg: '文件名不匹配'
+          status: sails.config.globals.responseStatus.error.status
         };
       }
       // 向ipfs写文件
@@ -90,7 +99,7 @@ module.exports = {
       // 获取stat
       const stat = await ipfs.files.stat(path);
       return {
-        success: true,
+        status: sails.config.globals.responseStatus.success.status,
         result: [
           {
             transaction: stat.cid.toString()
@@ -98,10 +107,9 @@ module.exports = {
         ]
       };
     } catch (error) {
-      sails.log(error);
+      sails.log(`update ${hash} error: `, error);
       return {
-        success: false,
-        msg: error.message
+        status: sails.config.globals.responseStatus.error.status
       };
     }
   }

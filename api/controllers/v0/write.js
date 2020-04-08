@@ -49,7 +49,17 @@ module.exports = {
   async fn({ data, md5, size, name, sign, timestamp, publickey }) {
     try {
       sails.helpers.verify(data, md5, size, name, sign, timestamp, publickey);
-      const path = getPath(sails.helpers.toAddress(publickey), name);
+
+      const address = sails.helpers.toAddress(publickey);
+      const isValid = await sails.helpers.validateUser(address);
+      sails.log(`${address} deposit is valid: `, isValid);
+      if (!isValid) {
+        return {
+          status: sails.config.globals.responseStatus.lackoil.status
+        };
+      }
+
+      const path = getPath(address, name);
 
       // 向ipfs写文件
       await ipfs.files.write(
@@ -78,7 +88,7 @@ module.exports = {
       // 获取stat
       const stat = await ipfs.files.stat(path);
       return {
-        success: true,
+        status: sails.config.globals.responseStatus.success.status,
         result: [
           {
             transaction: stat.cid.toString()
@@ -86,10 +96,9 @@ module.exports = {
         ]
       };
     } catch (error) {
-      sails.log(error);
+      sails.log(`${publickey} write error: `, error);
       return {
-        success: false,
-        msg: error.message
+        status: sails.config.globals.responseStatus.error.status
       };
     }
   }
