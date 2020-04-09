@@ -13,6 +13,7 @@ const defaultRoutes = {
 
 const v0 = {
   'post /api/v0/write': { action: 'v0/write' },
+  'post /api/v0/writemain': { action: 'v0/writemain' },
   'post /api/v0/syncing/:hash': { action: 'v0/syncing' },
   'post /api/v0/read/:hash': { action: 'v0/read' },
   'post /api/v0/remove/:hash': { action: 'v0/remove' },
