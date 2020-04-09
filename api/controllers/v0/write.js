@@ -1,5 +1,5 @@
+const Path = require('path');
 const ipfs = require('@utils/ipfs');
-const getPath = require('@utils/path').getPath;
 
 module.exports = {
   friendlyName: 'Write',
@@ -27,6 +27,11 @@ module.exports = {
       type: 'string',
       required: true
     },
+    path: {
+      description: '文件路径',
+      type: 'string',
+      required: false
+    },
     sign: {
       description: '签名',
       type: 'string',
@@ -46,7 +51,7 @@ module.exports = {
 
   exits: {},
 
-  async fn({ data, md5, size, name, sign, timestamp, publickey }) {
+  async fn({ data, md5, size, name, sign, timestamp, publickey, path }) {
     try {
       sails.helpers.verify(data, md5, size, name, sign, timestamp, publickey);
 
@@ -59,11 +64,16 @@ module.exports = {
         };
       }
 
-      const path = getPath(address, name);
+      let filePath;
+      if (path) {
+        filePath = Path.join('/', path, name);
+      } else {
+        filePath = Path.join('/', name);
+      }
 
       // 向ipfs写文件
       await ipfs.files.write(
-        path,
+        filePath,
         Buffer.from(
           JSON.stringify({
             data,
@@ -74,7 +84,7 @@ module.exports = {
             timestamp,
             publickey,
             // 保存写入文件路径
-            path
+            path: filePath
           })
         ),
         {
@@ -86,7 +96,7 @@ module.exports = {
       );
 
       // 获取stat
-      const stat = await ipfs.files.stat(path);
+      const stat = await ipfs.files.stat(filePath);
       return {
         status: sails.config.globals.responseStatus.success.status,
         result: [
