@@ -5,11 +5,6 @@ module.exports = {
   friendlyName: 'Verify',
   description: 'Verify signature and md5',
   inputs: {
-    data: {
-      description: '所要上传数据',
-      type: 'string',
-      required: true
-    },
     md5: {
       description: '上传数据md5',
       type: 'string',
@@ -17,11 +12,11 @@ module.exports = {
     },
     size: {
       description: '文件大小',
-      type: 'number',
+      type: 'string',
       required: true
     },
-    name: {
-      description: '文件名称',
+    filePath: {
+      description: '文件路径',
       type: 'string',
       required: true
     },
@@ -35,7 +30,7 @@ module.exports = {
       type: 'number',
       required: true
     },
-    publickey: {
+    publicKey: {
       description: '公钥',
       type: 'string',
       required: true
@@ -54,14 +49,12 @@ module.exports = {
   },
   sync: true,
   fn(inputs, exits) {
-    const { data, md5, size, name, sign, timestamp, publickey } = inputs;
-
-    if (MD5(data) !== md5) {
-      throw 'invalidMd5';
-    }
-
+    const { md5, size, name, timestamp, sign, publicKey } = inputs;
+    // if (MD5(data) !== md5) {
+    //   throw 'invalidMd5';
+    // }
     try {
-      if (!Keypair.verify(md5 + size + name + timestamp, sign, publickey)) {
+      if (!Keypair.verify(md5 + size + name + timestamp, sign, publicKey)) {
         throw 'invalidSignature';
       }
     } catch (error) {

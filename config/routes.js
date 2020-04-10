@@ -13,12 +13,10 @@ const defaultRoutes = {
 
 const v0 = {
   'post /api/v0/write': { action: 'v0/write' },
-  'post /api/v0/writemain': { action: 'v0/writemain' },
-  'post /api/v0/syncing/:hash': { action: 'v0/syncing' },
-  'post /api/v0/read/:hash': { action: 'v0/read' },
-  'post /api/v0/remove/:hash': { action: 'v0/remove' },
-  'post /api/v0/update/:hash': { action: 'v0/update' },
-  'post /api/v0/list/:address': { action: 'v0/list' }
+  'get /api/v0/read': { action: 'v0/read' },
+  'post /api/v0/read': { action: 'v0/read' },
+  'post /api/v0/remove': { action: 'v0/remove' },
+  'post /api/v0/list': { action: 'v0/list' }
 };
 
 module.exports.routes = Object.assign({}, defaultRoutes, v0);

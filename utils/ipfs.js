@@ -4,7 +4,7 @@ module.exports = ((IpfsHttpClient) => {
   let ipfs = null;
   if (ipfs === null) {
     ipfs = IpfsHttpClient({
-      host: 'localhost',
+      host: '111.229.222.136',
       port: '9095',
       protocol: 'http'
     });

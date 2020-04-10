@@ -1,5 +1,6 @@
-const getFolder = require('@utils/path').getFolder;
+const getPath = require('@utils/path').getPath;
 const ipfs = require('@utils/ipfs');
+const Path = require('path');
 
 module.exports = {
   friendlyName: 'List',
@@ -9,46 +10,44 @@ module.exports = {
       description: '钱包地址',
       type: 'string',
       required: true
+    },
+    path: {
+      description: '路径',
+      type: 'string',
+      required: false
     }
   },
   exits: {},
-  async fn({ address }) {
+  async fn({ address, path }) {
     try {
+      path = path || '';
+      path = Path.join('/', path + '/').replace(/\\/g, '/');
       sails.helpers.isValidAddress(address);
-      const files = await ipfs.files.ls(getFolder(address));
+      const newFilePath = getPath(address, path);
+      const files = await ipfs.files.ls(newFilePath);
       const results = [];
       for await (const file of files) {
-        const datas = await ipfs.get(file.cid);
-        for await (data of datas) {
-          const content = [];
-          for await (const chunk of data.content) {
-            content.push(chunk);
-          }
-          const res = JSON.parse(content.toString());
-          results.push({
-            data: res.data,
-            md5: res.md5,
-            size: res.size,
-            name: res.name,
-            sign: {
-              md5: res.md5,
-              size: res.size,
-              name: res.name,
-              timestamp: res.timestamp
-            },
-            timestamp: res.timestamp,
-            publickey: res.publickey
-          });
-        }
+        let isDir = file.type === 1; //是否为目录
+        let filePath = path + file.name + (isDir ? '/' : '');
+        results.push({
+          path: {
+            ...Path.parse(filePath),
+            path: filePath
+          },
+          size: file.size,
+          isDir: isDir
+        });
+        sails.log(file);
       }
       return {
         status: sails.config.globals.responseStatus.success.status,
-        results
+        files: results
       };
     } catch (error) {
       sails.log(`fetch ${address} list error: `, error);
       return {
-        status: sails.config.globals.responseStatus.error.status
+        status: sails.config.globals.responseStatus.error.status,
+        message: error.message
       };
     }
   }

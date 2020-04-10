@@ -1,5 +1,6 @@
 const Path = require('path');
 const ipfs = require('@utils/ipfs');
+const getPath = require('@utils/path').getPath;
 
 module.exports = {
   friendlyName: 'Write',
@@ -22,15 +23,10 @@ module.exports = {
       type: 'number',
       required: true
     },
-    name: {
-      description: '文件名称',
-      type: 'string',
-      required: true
-    },
-    path: {
+    filePath: {
       description: '文件路径',
       type: 'string',
-      required: false
+      required: true
     },
     sign: {
       description: '签名',
@@ -42,7 +38,7 @@ module.exports = {
       type: 'number',
       required: true
     },
-    publickey: {
+    publicKey: {
       description: '公钥',
       type: 'string',
       required: true
@@ -51,40 +47,32 @@ module.exports = {
 
   exits: {},
 
-  async fn({ data, md5, size, name, sign, timestamp, publickey, path }) {
+  async fn({ data, md5, size, sign, timestamp, publicKey, filePath }) {
     try {
-      sails.helpers.verify(data, md5, size, name, sign, timestamp, publickey);
-
-      const address = sails.helpers.toAddress(publickey);
-      const isValid = await sails.helpers.validateUser(address);
-      sails.log(`${address} deposit is valid: `, isValid);
-      if (!isValid) {
-        return {
-          status: sails.config.globals.responseStatus.lackoil.status
-        };
-      }
-
-      let filePath;
-      if (path) {
-        filePath = Path.join('/', path, name);
-      } else {
-        filePath = Path.join('/', name);
-      }
-
+      //sails.helpers.verify(md5, size, filePath, timestamp, sign, publickey);
+      const address = sails.helpers.toAddress(publicKey);
+      // const isValid = await sails.helpers.validateUser(address);
+      // sails.log(`${address} deposit is valid: `, isValid);
+      // if (!isValid) {
+      //   return {
+      //     status: sails.config.globals.responseStatus.lackoil.status
+      //   };
+      // }
+      let path = Path.parse(filePath);
+      const newFilePath = getPath(address, filePath);
       // 向ipfs写文件
       await ipfs.files.write(
-        filePath,
+        newFilePath,
         Buffer.from(
           JSON.stringify({
             data,
             md5,
             size,
-            name,
-            sign,
             timestamp,
-            publickey,
-            // 保存写入文件路径
-            path: filePath
+            path: {
+              ...path,
+              path: filePath
+            }
           })
         ),
         {
@@ -96,7 +84,7 @@ module.exports = {
       );
 
       // 获取stat
-      const stat = await ipfs.files.stat(filePath);
+      const stat = await ipfs.files.stat(newFilePath);
       return {
         status: sails.config.globals.responseStatus.success.status,
         result: [
@@ -106,9 +94,10 @@ module.exports = {
         ]
       };
     } catch (error) {
-      sails.log(`${publickey} write error: `, error);
+      sails.log(`${publicKey} write error: `, error);
       return {
-        status: sails.config.globals.responseStatus.error.status
+        status: sails.config.globals.responseStatus.error.status,
+        message: error.message
       };
     }
   }
