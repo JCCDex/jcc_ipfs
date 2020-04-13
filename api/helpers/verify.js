@@ -7,12 +7,12 @@ module.exports = {
     md5: {
       description: '上传数据md5',
       type: 'string',
-      required: true
+      required: false
     },
     size: {
       description: '文件大小',
       type: 'string',
-      required: true
+      required: false
     },
     filePath: {
       description: '文件路径',
@@ -26,7 +26,7 @@ module.exports = {
     },
     timestamp: {
       description: '时间戳',
-      type: 'number',
+      type: 'string',
       required: true
     },
     publicKey: {
@@ -48,12 +48,12 @@ module.exports = {
   },
   sync: true,
   fn(inputs, exits) {
-    const { md5, size, name, timestamp, sign, publicKey } = inputs;
+    const { md5, size, filePath, timestamp, sign, publicKey } = inputs;
     // if (MD5(data) !== md5) {
     //   throw 'invalidMd5';
     // }
     try {
-      if (!Keypair.verify(md5 + size + name + timestamp, sign, publicKey)) {
+      if (!Keypair.verify(md5 + size + filePath + timestamp, sign, publicKey)) {
         throw 'invalidSignature';
       }
     } catch (error) {

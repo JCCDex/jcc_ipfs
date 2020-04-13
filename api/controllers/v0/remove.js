@@ -28,7 +28,7 @@ module.exports = {
   exits: {},
   async fn({ filePath, timestamp, sign, publicKey }) {
     try {
-      sails.helpers.verify('', '', filePath, timestamp, sign, publicKey);
+      sails.helpers.verify('', '', filePath, sign, timestamp, publicKey);
       // 获取stat
       const address = sails.helpers.toAddress(publicKey);
       const newFilePath = getPath(address, filePath);
