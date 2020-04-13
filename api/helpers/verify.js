@@ -15,6 +15,11 @@ module.exports = {
       type: 'string',
       required: false
     },
+    filePath: {
+      description: '文件路径',
+      type: 'string',
+      required: true
+    },
     timestamp: {
       description: '时间戳',
       type: 'string',
@@ -44,12 +49,12 @@ module.exports = {
   },
   sync: true,
   fn(inputs, exits) {
-    const { md5, size, timestamp, sign, publicKey } = inputs;
+    const { md5, size, timestamp, sign, filePath, publicKey } = inputs;
     // if (MD5(data) !== md5) {
     //   throw 'invalidMd5';
     // }
     try {
-      let hex = Buffer.from(md5 + size + timestamp).toString('hex');
+      let hex = Buffer.from(md5 + size + filePath + timestamp).toString('hex');
       if (!Keypair.verify(hex, sign, publicKey)) {
         throw 'invalidSignature';
       }
