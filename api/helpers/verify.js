@@ -1,4 +1,5 @@
 const Keypair = require('@swtc/keypairs').Keypairs;
+const bytesToHex = require('@swtc/common').funcBytesToHex;
 
 module.exports = {
   friendlyName: 'Verify',
@@ -14,18 +15,13 @@ module.exports = {
       type: 'string',
       required: false
     },
-    filePath: {
-      description: '文件路径',
+    timestamp: {
+      description: '时间戳',
       type: 'string',
       required: true
     },
     sign: {
       description: '签名',
-      type: 'string',
-      required: true
-    },
-    timestamp: {
-      description: '时间戳',
       type: 'string',
       required: true
     },
@@ -48,12 +44,13 @@ module.exports = {
   },
   sync: true,
   fn(inputs, exits) {
-    const { md5, size, filePath, timestamp, sign, publicKey } = inputs;
+    const { md5, size, timestamp, sign, publicKey } = inputs;
     // if (MD5(data) !== md5) {
     //   throw 'invalidMd5';
     // }
     try {
-      if (!Keypair.verify(md5 + size + filePath + timestamp, sign, publicKey)) {
+      let hex = Buffer.from(md5 + size + timestamp).toString('hex');
+      if (!Keypair.verify(hex, sign, publicKey)) {
         throw 'invalidSignature';
       }
     } catch (error) {

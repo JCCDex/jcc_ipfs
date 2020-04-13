@@ -11,7 +11,7 @@ module.exports = {
     },
     timestamp: {
       description: '时间戳',
-      type: 'number',
+      type: 'string',
       required: true
     },
     sign: {
@@ -28,7 +28,7 @@ module.exports = {
   exits: {},
   async fn({ filePath, timestamp, sign, publicKey }) {
     try {
-      sails.helpers.verify('', '', filePath, sign, timestamp, publicKey);
+      sails.helpers.verify('', '', timestamp, sign, publicKey);
       // 获取stat
       const address = sails.helpers.toAddress(publicKey);
       const newFilePath = getPath(address, filePath);

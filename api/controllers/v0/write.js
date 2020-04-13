@@ -35,7 +35,7 @@ module.exports = {
     },
     timestamp: {
       description: '时间戳',
-      type: 'number',
+      type: 'string',
       required: true
     },
     publicKey: {
@@ -49,7 +49,7 @@ module.exports = {
 
   async fn({ data, md5, size, sign, timestamp, publicKey, filePath }) {
     try {
-      sails.helpers.verify(md5, size, filePath, sign, timestamp, publicKey);
+      sails.helpers.verify(md5, size, timestamp, sign, publicKey);
       const address = sails.helpers.toAddress(publicKey);
       const isValid = await sails.helpers.validateUser(address);
       sails.log(`${address} deposit is valid: `, isValid);
