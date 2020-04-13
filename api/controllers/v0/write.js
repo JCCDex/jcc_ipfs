@@ -71,7 +71,7 @@ module.exports = {
             timestamp,
             path: {
               ...path,
-              path: filePath
+              filePath: filePath
             }
           })
         ),

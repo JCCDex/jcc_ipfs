@@ -32,7 +32,7 @@ module.exports = {
         results.push({
           path: {
             ...Path.parse(filePath),
-            path: filePath
+            filePath: filePath
           },
           size: file.size,
           isDir: isDir
