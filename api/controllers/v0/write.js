@@ -49,15 +49,15 @@ module.exports = {
 
   async fn({ data, md5, size, sign, timestamp, publicKey, filePath }) {
     try {
-      //sails.helpers.verify(md5, size, filePath, timestamp, sign, publickey);
+      sails.helpers.verify(md5, size, filePath, timestamp, sign, publickey);
       const address = sails.helpers.toAddress(publicKey);
-      // const isValid = await sails.helpers.validateUser(address);
-      // sails.log(`${address} deposit is valid: `, isValid);
-      // if (!isValid) {
-      //   return {
-      //     status: sails.config.globals.responseStatus.lackoil.status
-      //   };
-      // }
+      const isValid = await sails.helpers.validateUser(address);
+      sails.log(`${address} deposit is valid: `, isValid);
+      if (!isValid) {
+        return {
+          status: sails.config.globals.responseStatus.lackoil.status
+        };
+      }
       let path = Path.parse(filePath);
       const newFilePath = getPath(address, filePath);
       // 向ipfs写文件
