@@ -1,5 +1,4 @@
 const Keypair = require('@swtc/keypairs').Keypairs;
-const MD5 = require('blueimp-md5');
 
 module.exports = {
   friendlyName: 'Verify',
