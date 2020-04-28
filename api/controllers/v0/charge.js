@@ -38,7 +38,7 @@ module.exports = {
       const { amount, time } = res.data;
       const { value } = amount;
       const { address, secret } = operatorAccount;
-      const memo = time * 1000 + 365 * 24 * 60 * 60 * 1000;
+      const memo = (time + 946684800) * 1000 + 365 * 24 * 60 * 60 * 1000;
       // 返回hash不代表转账一定成功，正常情况下返回hash就表示转账是成功的，存在少数情况交易上链了但是转账失败
       // 理想状态应根据hash从链上获取交易详情
       const transHash = await JCCExchange.transfer(
