@@ -16,7 +16,8 @@ const v0 = {
   'get /api/v0/read': { action: 'v0/read' },
   'post /api/v0/read': { action: 'v0/read' },
   'post /api/v0/remove': { action: 'v0/remove' },
-  'post /api/v0/list': { action: 'v0/list' }
+  'post /api/v0/list': { action: 'v0/list' },
+  'post /api/v0/charge': { action: 'v0/charge' }
 };
 
 module.exports.routes = Object.assign({}, defaultRoutes, v0);

@@ -19,10 +19,10 @@ const spareOperator = () => {
   };
 };
 
-const charge_amount = 1000; //用户充值金额
+const chargeAmount = 1000; //用户充值金额
 
 module.exports = {
   operator,
   spareOperator,
-  charge_amount
+  chargeAmount
 };

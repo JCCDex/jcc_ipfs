@@ -1,5 +1,4 @@
 const Keypair = require('@swtc/keypairs').Keypairs;
-const bytesToHex = require('@swtc/common').funcBytesToHex;
 
 module.exports = {
   friendlyName: 'Verify',
