@@ -21,9 +21,9 @@ module.exports = {
     const res = inputs.transaction;
     const data = res.data;
     const { dest, amount, succ, type } = data;
-    const { value, currency, issuer } = amount;
-    const isSuccess = succ === 'tesSUCCESS';
     const isPayment = type === 'Payment';
+    const { value, currency, issuer } = amount || {};
+    const isSuccess = succ === 'tesSUCCESS';
     const isDest = dest === operator().address;
     const isValidAmount =
       new BigNumber(value).eq(chargeAmount) &&
