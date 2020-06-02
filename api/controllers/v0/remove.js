@@ -9,35 +9,26 @@ module.exports = {
       type: 'string',
       required: false
     },
-    timestamp: {
-      description: '时间戳',
-      type: 'string',
-      required: true
-    },
-    sign: {
-      description: '签名',
-      type: 'string',
-      required: true
-    },
-    publicKey: {
-      description: '公钥',
+    address: {
+      description: '钱包地址',
       type: 'string',
       required: true
     }
   },
   exits: {},
-  async fn({ filePath, timestamp, sign, publicKey }) {
+  async fn({ filePath, address }) {
     try {
-      sails.helpers.verify('', '', filePath, timestamp, sign, publicKey);
+      // sails.helpers.verify('', '', filePath, timestamp, sign, publicKey);
       // 获取stat
-      const address = sails.helpers.toAddress(publicKey);
+      // const address = sails.helpers.toAddress(publicKey);
+      sails.helpers.isValidAddress(address);
       const newFilePath = getPath(address, filePath);
       await ipfs.files.rm(newFilePath, { recursive: true });
       return {
         status: sails.config.globals.responseStatus.success.status
       };
     } catch (error) {
-      sails.log(`remove ${filePath} error: `, error);
+      sails.log(`remove ${address} ${filePath} error: `, error);
       return {
         status: sails.config.globals.responseStatus.error.status,
         message: error.message
