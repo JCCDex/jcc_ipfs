@@ -9,7 +9,7 @@ module.exports = {
 
   inputs: {
     data: {
-      description: '所要上传数据',
+      description: '上传数据',
       type: 'string',
       required: true
     },
@@ -33,6 +33,11 @@ module.exports = {
       type: 'string',
       required: true
     },
+    name: {
+      description: '文件名称',
+      type: 'string',
+      required: true
+    },
     timestamp: {
       description: '时间戳',
       type: 'string',
@@ -47,19 +52,21 @@ module.exports = {
 
   exits: {},
 
-  async fn({ data, md5, size, sign, timestamp, publicKey, filePath }) {
+  async fn({ data, md5, size, sign, name, timestamp, publicKey, filePath }) {
     try {
       sails.helpers.verify(md5, size, filePath, timestamp, sign, publicKey);
       const address = sails.helpers.toAddress(publicKey);
       const isValid = await sails.helpers.validateUser(address);
-      sails.log(`${address} deposit is valid: `, isValid);
+      sails.log(`${address} is vip: `, isValid);
       if (!isValid) {
         return {
           status: sails.config.globals.responseStatus.lackoil.status
         };
       }
       let path = Path.parse(filePath);
-      const newFilePath = getPath(address, filePath);
+
+      let newFilePath = getPath(address, filePath);
+      newFilePath = getPath(newFilePath, name);
       // 向ipfs写文件
       await ipfs.files.write(
         newFilePath,
