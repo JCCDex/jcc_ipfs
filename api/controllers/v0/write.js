@@ -47,7 +47,7 @@ module.exports = {
 
   exits: {},
 
-  async fn({ data, md5, size, sign, name, timestamp, publicKey, filePath }) {
+  async fn({ data, md5, size, sign, timestamp, publicKey, filePath }) {
     try {
       sails.helpers.verify(md5, size, filePath, timestamp, sign, publicKey);
       const address = sails.helpers.toAddress(publicKey);
@@ -61,7 +61,6 @@ module.exports = {
       let path = Path.parse(filePath);
 
       let newFilePath = getPath(address, filePath);
-      newFilePath = getPath(newFilePath, name);
       // 向ipfs写文件
       await ipfs.files.write(
         newFilePath,
