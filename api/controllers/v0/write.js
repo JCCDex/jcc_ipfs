@@ -33,11 +33,6 @@ module.exports = {
       type: 'string',
       required: true
     },
-    name: {
-      description: '文件名称',
-      type: 'string',
-      required: true
-    },
     timestamp: {
       description: '时间戳',
       type: 'string',
