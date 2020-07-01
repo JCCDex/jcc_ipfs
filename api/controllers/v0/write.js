@@ -1,6 +1,6 @@
 const Path = require('path');
-const ipfs = require('@utils/ipfs');
-const getPath = require('@utils/path').getPath;
+const ipfs = require('../../../utils/ipfs');
+const getPath = require('../../../utils/path').getPath;
 
 module.exports = {
   friendlyName: 'Write',

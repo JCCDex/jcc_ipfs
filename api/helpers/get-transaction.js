@@ -1,4 +1,4 @@
-const explorerInst = require('@utils/explorer');
+const explorerInst = require('../../utils/explorer');
 
 module.exports = {
   friendlyName: 'Get transaction',

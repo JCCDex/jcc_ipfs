@@ -1,5 +1,5 @@
-const getPath = require('@utils/path').getPath;
-const ipfs = require('@utils/ipfs');
+const getPath = require('../../../utils/path').getPath;
+const ipfs = require('../../../utils/ipfs');
 const Path = require('path');
 
 module.exports = {

@@ -1,5 +1,5 @@
 const JCCExchange = require('jcc_exchange').JCCExchange;
-const { operator, spareOperator } = require('@utils/config');
+const { operator, spareOperator } = require('../../../utils/config');
 const operatorAccount = operator();
 const assistAccount = spareOperator();
 

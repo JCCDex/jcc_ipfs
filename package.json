@@ -16,7 +16,6 @@
     "ipfs-http-client": "^42.0.0",
     "jcc_exchange": "^3.1.12",
     "jcc_rpc": "^0.2.6",
-    "module-alias": "^2.2.2",
     "sails": "^1.2.4",
     "sails-hook-grunt": "^4.0.0",
     "sails-hook-orm": "^2.1.1",

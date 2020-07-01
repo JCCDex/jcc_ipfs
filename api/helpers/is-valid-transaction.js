@@ -1,5 +1,5 @@
 const BigNumber = require('bignumber.js');
-const { operator, chargeAmount } = require('@utils/config');
+const { operator, chargeAmount } = require('../../utils/config');
 
 module.exports = {
   friendlyName: 'Is valid transaction',
