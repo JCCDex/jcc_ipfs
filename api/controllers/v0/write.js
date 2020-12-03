@@ -1,6 +1,7 @@
 const Path = require('path');
 const ipfs = require('../../../utils/ipfs');
-const getPath = require('../../../utils/path').getPath;
+const ipfsCluster = require('../../../utils/cluster');
+const { ROOT_PATH, getPath } = require('../../../utils/path');
 
 module.exports = {
   friendlyName: 'Write',
@@ -83,6 +84,10 @@ module.exports = {
           create: true
         }
       );
+
+      const rootStat = await ipfs.files.stat(ROOT_PATH);
+      await ipfsCluster.pin.add(rootStat.cid, { name: 'jpass-' + Date.now() });
+      await ipfs.name.publish(rootStat.cid, { key: 'jpass' });
 
       // 获取stat
       const stat = await ipfs.files.stat(newFilePath);
