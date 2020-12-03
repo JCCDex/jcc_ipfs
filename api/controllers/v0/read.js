@@ -1,5 +1,5 @@
-const ipfs = require('../../../utils/ipfs');
-const getPath = require('../../../utils/path').getPath;
+const { getIPNSPath } = require('../../../utils/path');
+const fetch = require('../../../utils/fetch');
 
 module.exports = {
   friendlyName: 'Read',
@@ -21,19 +21,14 @@ module.exports = {
   async fn({ filePath, address }) {
     try {
       sails.helpers.isValidAddress(address);
-      const newFilePath = getPath(address, filePath);
-      const files = await ipfs.files.read(newFilePath);
-      const results = [];
-      for await (const file of files) {
-        results.push(file);
-      }
-      let file = JSON.parse(Buffer.concat(results).toString());
+      const newFilePath = getIPNSPath(address, filePath);
+      const file = await fetch.get(newFilePath);
       if (this.req.method === 'GET') {
         return file.data;
       }
       return {
         status: sails.config.globals.responseStatus.success.status,
-        file: file
+        file
       };
     } catch (error) {
       sails.log(`read ${filePath} error: `, error);
