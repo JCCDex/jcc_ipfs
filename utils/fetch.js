@@ -1,6 +1,6 @@
 const axios = require('axios');
 const service = axios.create({
-  baseURL: 'http://192.168.66.16:8080',
+  baseURL: sails.config.custom.ipfs.gateWayUrl[0],
   timeout: 30000
 });
 
