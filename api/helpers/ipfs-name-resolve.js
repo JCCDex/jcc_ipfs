@@ -5,7 +5,7 @@ module.exports = {
   description: 'get ipfs cid of ipns resolve ',
 
   inputs: {
-    ipns_value: {
+    ipnsValue: {
       description: 'ipns value',
       type: 'string',
       defaultsTo: sails.config.custom.IPNS.value
@@ -19,7 +19,7 @@ module.exports = {
   },
 
   fn: async function (inputs) {
-    const addr = '/ipns/' + inputs.ipns_value;
+    const addr = '/ipns/' + inputs.ipnsValue;
     let name;
     for await (name of ipfs.name.resolve(addr)) {
       sails.log.verbose(name);

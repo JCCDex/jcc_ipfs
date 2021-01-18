@@ -15,7 +15,7 @@ before(function (done) {
       hooks: { grunt: false },
       log: { level: 'verbose' }
     },
-    function (err) {
+    (err) => {
       if (err) {
         return done(err);
       }
@@ -29,7 +29,7 @@ before(function (done) {
 });
 
 // After all tests have finished...
-after(function (done) {
+after((done) => {
   // here you can clear fixtures, etc.
   // (e.g. you might want to destroy the records you created above)
 
