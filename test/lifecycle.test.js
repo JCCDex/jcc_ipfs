@@ -13,7 +13,7 @@ before(function (done) {
       // For example, we might want to skip the Grunt hook,
       // and disable all logs except errors and warnings:
       hooks: { grunt: false },
-      log: { level: 'verbose' }
+      log: { level: 'info' }
     },
     (err) => {
       if (err) {
