@@ -86,8 +86,12 @@ module.exports = {
       );
 
       const rootStat = await ipfs.files.stat(ROOT_PATH);
-      await ipfsCluster.pin.add(rootStat.cid, { name: 'jpass-' + Date.now() });
-      await ipfs.name.publish(rootStat.cid, { key: 'jpass' });
+      await ipfsCluster.pin.add(rootStat.cid, {
+        name: sails.config.custom.IPNS.key + '-' + Date.now()
+      });
+      await ipfs.name.publish(rootStat.cid, {
+        key: sails.config.custom.IPNS.key
+      });
 
       // 获取stat
       const stat = await ipfs.files.stat(newFilePath);

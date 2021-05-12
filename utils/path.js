@@ -1,9 +1,9 @@
 const Path = require('path');
 
-const ROOT_PATH = '/jpass/';
+const ROOT_PATH = '/' + sails.config.custom.IPNS.key + '/';
 
-const IPNS_KEY =
-  '/ipns/k2k4r8kgh5g54wt86gywt5vvi48he4vet2mdj0mh7ihg41ki6v18k2uj/';
+const IPNS_KEY = '/ipns/' + sails.config.custom.IPNS.value + '/';
+//'/ipns/k2k4r8kgh5g54wt86gywt5vvi48he4vet2mdj0mh7ihg41ki6v18k2uj/';
 
 const getFolder = (address) => {
   return ROOT_PATH + address;

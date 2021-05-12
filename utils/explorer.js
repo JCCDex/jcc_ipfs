@@ -20,7 +20,7 @@ const ExplorerFactory = Factory(JcExplorer);
 let explorerInst;
 
 if (process.env.NODE_ENV === 'development') {
-  explorerInst = ExplorerFactory.init(['https://stats.jccdex.cn']);
+  explorerInst = ExplorerFactory.init(sails.config.custom.ExplorerUrl);
 } else {
   explorerInst = ExplorerFactory.init(['https://swtcscan.jccdex.cn']);
 }
