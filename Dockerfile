@@ -1,4 +1,4 @@
-FROM registry.cn-qingdao.aliyuncs.com/jccoin/jc_sails:1.2.4
+FROM registry.cn-qingdao.aliyuncs.com/jccoin/jc_sails:node12
 
 CMD ["sails", "lift","--prod"]
 WORKDIR /app
