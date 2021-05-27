@@ -26,12 +26,12 @@ module.exports.custom = {
   ipfs: {
     gateWayUrl: ['http://192.168.66.16:8080'],
     clientApi: {
-      host: '192.168.66.16',
+      host: '192.168.66.18',
       port: '9095',
       protocol: 'http'
     },
     clusterApi: {
-      host: '192.168.66.16',
+      host: '192.168.66.18',
       port: '9094',
       protocol: 'http'
     }
