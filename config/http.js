@@ -8,7 +8,8 @@
  * For more information on configuration, check out:
  * https://sailsjs.com/config/http
  */
-
+let swStats = require('swagger-stats');
+let swaggerSpec = require('swagger-stats/examples/authtest/petstore.json');
 module.exports.http = {
   /****************************************************************************
    *                                                                           *
@@ -48,5 +49,37 @@ module.exports.http = {
     //   var middlewareFn = skipper({ strict: true });
     //   return middlewareFn;
     // })(),
-  },
+
+    order: [
+      'swaggerStats',
+      'cookieParser',
+      'session',
+      'bodyParser',
+      'compress',
+      'poweredBy',
+      'router',
+      'www',
+      'favicon'
+    ],
+
+    swaggerStats: (function _configureSwaggerStats() {
+      let swsOptions = {
+        name: 'swagger-stats-sailsjs',
+        version: '0.1.0',
+        timelineBucketDuration: 60000,
+        swaggerSpec: swaggerSpec,
+        durationBuckets: [50, 100, 200, 500, 1000, 5000],
+        requestSizeBuckets: [500, 5000, 15000, 50000],
+        responseSizeBuckets: [600, 6000, 6000, 60000],
+        // Make sure both 50 and 50*4 are buckets in durationBuckets,
+        // so Apdex could be calculated in Prometheus
+        apdexThreshold: 50,
+        onResponseFinish: function (req, res, rrr) {
+          debug('onResponseFinish: %s', JSON.stringify(rrr));
+        },
+        authentication: false
+      };
+      return swStats.getMiddleware(swsOptions);
+    })()
+  }
 };
