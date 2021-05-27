@@ -25,5 +25,6 @@ module.exports.bootstrap = async function () {
   //   // etc.
   // ]);
   // ```
-  await sails.helpers.bootInit();
+  let _res = await sails.helpers.bootInit();
+  sails.log.debug(_res);
 };

@@ -24,20 +24,20 @@ module.exports.custom = {
     value: 'k2k4r8kgh5g54wt86gywt5vvi48he4vet2mdj0mh7ihg41ki6v18k2uj'
   },
   ipfs: {
-    gateWayUrl: ['http://192.168.66.16:8080'],
+    gateWayUrl: ['http://111.229.222.136:8080'],
     clientApi: {
-      host: '192.168.66.18',
+      host: '111.229.222.136',
       port: '9095',
       protocol: 'http'
     },
     clusterApi: {
-      host: '192.168.66.18',
+      host: '111.229.222.136',
       port: '9094',
       protocol: 'http'
     }
   },
   ipfsCluster: {
-    hosts: ['192.168.66.16', '192.168.66.17', '192.168.66.18'],
+    hosts: ['192.168.66.16', '192.168.66.17', '111.229.222.136'],
     gateWayPort: '8080',
     clientApiPort: '9095',
     clusterApiPort: '9094'

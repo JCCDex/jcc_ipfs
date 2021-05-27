@@ -1,4 +1,17 @@
 module.exports = {
+  security: {
+    cors: {
+      allRoutes: true,
+      allowOrigins: '*',
+      allowAnyOriginWithCredentialsUnsafe: true,
+      allowCredentials: true
+    }
+  },
+
+  session: {},
+  sockets: {
+    onlyAllowOrigins: ['http://172.17.0.1']
+  },
   custom: {
     ExplorerUrl: ['https://stats.jccdex.cn'],
     IPNS: {

@@ -225,10 +225,7 @@ module.exports = {
      * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
      *                                                                          *
      ***************************************************************************/
-    // onlyAllowOrigins: [
-    //   'https://example.com',
-    //   'https://staging.example.com',
-    // ],
+    onlyAllowOrigins: ['https://example.com', 'https://staging.example.com']
     /***************************************************************************
      *                                                                          *
      * If you are deploying a cluster of multiple servers and/or processes,     *
@@ -262,7 +259,7 @@ module.exports = {
    *                                                                         *
    ***************************************************************************/
   log: {
-    level: 'debug'
+    level: 'info'
   },
 
   http: {
@@ -331,22 +328,29 @@ module.exports = {
    *                                                                         *
    ***************************************************************************/
   custom: {
-    baseUrl: 'https://example.com',
-    internalEmailAddress: 'support@example.com'
-
-    // mailgunDomain: 'mg.example.com',
-    // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
-    // stripeSecret: 'sk_prod__fake_Nfgh82401348jaDa3lkZ0d9Hm',
-    //--------------------------------------------------------------------------
-    // /\   OR, to avoid checking them in to version control, you might opt to
-    // ||   set sensitive credentials like these using environment variables.
-    //
-    // For example:
-    // ```
-    // sails_custom__mailgunDomain=mg.example.com
-    // sails_custom__mailgunSecret=key-prod_fake_bd32301385130a0bafe030c
-    // sails_custom__stripeSecret=sk_prod__fake_Nfgh82401348jaDa3lkZ0d9Hm
-    // ```
-    //--------------------------------------------------------------------------
+    ExplorerUrl: ['https://stats.jccdex.cn'],
+    IPNS: {
+      key: 'jpass',
+      value: 'k2k4r8kgh5g54wt86gywt5vvi48he4vet2mdj0mh7ihg41ki6v18k2uj'
+    },
+    ipfs: {
+      gateWayUrl: ['http://111.229.222.136:8080'],
+      clientApi: {
+        host: '111.229.222.136',
+        port: '9095',
+        protocol: 'http'
+      },
+      clusterApi: {
+        host: '111.229.222.136',
+        port: '9094',
+        protocol: 'http'
+      }
+    },
+    ipfsCluster: {
+      hosts: ['172.17.16.16', '172.17.16.2', '172.17.16.6'],
+      gateWayPort: '8080',
+      clientApiPort: '9095',
+      clusterApiPort: '9094'
+    }
   }
 };
