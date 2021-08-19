@@ -52,13 +52,13 @@ module.exports = {
     try {
       sails.helpers.verify(md5, size, filePath, timestamp, sign, publicKey);
       const address = sails.helpers.toAddress(publicKey);
-      const isValid = await sails.helpers.validateUser(address);
-      sails.log(`${address} is vip: `, isValid);
-      if (!isValid) {
-        return {
-          status: sails.config.globals.responseStatus.lackoil.status
-        };
-      }
+      // const isValid = await sails.helpers.validateUser(address);
+      // sails.log(`${address} is vip: `, isValid);
+      // if (!isValid) {
+      //   return {
+      //     status: sails.config.globals.responseStatus.lackoil.status
+      //   };
+      // }
       let path = Path.parse(filePath);
 
       let newFilePath = getPath(address, filePath);
