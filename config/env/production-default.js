@@ -334,14 +334,14 @@ module.exports = {
       value: 'k2k4r8kgh5g54wt86gywt5vvi48he4vet2mdj0mh7ihg41ki6v18k2uj'
     },
     ipfs: {
-      gateWayUrl: ['http://111.229.222.136:8080'],
+      gateWayUrl: ['http://172.17.16.16:8080'],
       clientApi: {
-        host: '111.229.222.136',
+        host: '172.17.16.16',
         port: '9095',
         protocol: 'http'
       },
       clusterApi: {
-        host: '111.229.222.136',
+        host: '172.17.16.16',
         port: '9094',
         protocol: 'http'
       }
