@@ -49,11 +49,12 @@ module.exports = {
   exits: {},
 
   async fn({ data, md5, size, sign, timestamp, publicKey, filePath }) {
+    let newFilePath;
     try {
       sails.helpers.verify(md5, size, filePath, timestamp, sign, publicKey);
       const address = sails.helpers.toAddress(publicKey);
       const isValid = await sails.helpers.validateUser(address);
-      sails.log(`${address} is vip: `, isValid);
+      sails.log(Date(), ` ${address} is vip: `, isValid);
       if (!isValid) {
         return {
           status: sails.config.globals.responseStatus.lackoil.status
@@ -61,7 +62,7 @@ module.exports = {
       }
       let path = Path.parse(filePath);
 
-      let newFilePath = getPath(address, filePath);
+      newFilePath = getPath(address, filePath);
       // 向ipfs写文件
       await ipfs.files.write(
         newFilePath,
@@ -95,6 +96,7 @@ module.exports = {
 
       // 获取stat
       const stat = await ipfs.files.stat(newFilePath);
+      sails.log(Date(), ` write ${newFilePath} success`);
       return {
         status: sails.config.globals.responseStatus.success.status,
         result: [
@@ -104,7 +106,8 @@ module.exports = {
         ]
       };
     } catch (error) {
-      sails.log(`${publicKey} write error: `, error);
+      newFilePath = newFilePath || publicKey;
+      sails.log(Date(), ` ${newFilePath} write error: `, error);
       return {
         status: sails.config.globals.responseStatus.error.status,
         message: error.message

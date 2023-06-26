@@ -23,7 +23,7 @@ module.exports = {
     try {
       sails.helpers.isValidAddress(address);
       const file = await fetch.get(newFilePath);
-      sails.log(`read ${newFilePath} success: `);
+      sails.log(Date(), ` read ${newFilePath} success`);
       if (this.req.method === 'GET') {
         return file.data;
       }
@@ -32,7 +32,7 @@ module.exports = {
         file
       };
     } catch (error) {
-      sails.log(`read ${newFilePath} error: `, error);
+      sails.log(Date(), ` read ${newFilePath} error: `, error);
       return {
         status: sails.config.globals.responseStatus.error.status,
         message: error.message
