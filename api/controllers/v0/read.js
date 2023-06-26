@@ -19,10 +19,11 @@ module.exports = {
 
   exits: {},
   async fn({ filePath, address }) {
+    const newFilePath = getIPNSPath(address, filePath);
     try {
       sails.helpers.isValidAddress(address);
-      const newFilePath = getIPNSPath(address, filePath);
       const file = await fetch.get(newFilePath);
+      sails.log(`read ${newFilePath} success: `);
       if (this.req.method === 'GET') {
         return file.data;
       }
@@ -31,7 +32,7 @@ module.exports = {
         file
       };
     } catch (error) {
-      sails.log(`read ${filePath} error: `, error);
+      sails.log(`read ${newFilePath} error: `, error);
       return {
         status: sails.config.globals.responseStatus.error.status,
         message: error.message
