@@ -1,0 +1,3 @@
+FROM registry.cn-qingdao.aliyuncs.com/jccoin/jcc_ipfs:Pro_latest
+
+COPY . /app
