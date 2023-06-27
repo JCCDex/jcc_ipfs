@@ -44,11 +44,11 @@ module.exports.http = {
      * https://sailsjs.com/config/http#?customizing-the-body-parser             *
      *                                                                          *
      ***************************************************************************/
-    // bodyParser: (function _configureBodyParser(){
-    //   var skipper = require('skipper');
-    //   var middlewareFn = skipper({ strict: true });
-    //   return middlewareFn;
-    // })(),
+    bodyParser: (function _configureBodyParser() {
+      var skipper = require('skipper');
+      var middlewareFn = skipper({ strict: true, limit: '10mb' });
+      return middlewareFn;
+    })(),
 
     order: [
       'swaggerStats',
